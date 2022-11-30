@@ -1,3 +1,7 @@
- dsfsdf
+def main():
+    print(2**10)
 
- sdsfsfsfs
+
+if __name__ == '__main__':
+    main()
+    print('hello world!')
