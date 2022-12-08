@@ -9,8 +9,8 @@ class TestUniqueSelectors(unittest.TestCase):
 
     def setUp(self):
         config = configparser.ConfigParser()
-        config.read(f"{os.path.dirname(__file__)}\..\\firefox.ini")
-        firefox_driver_path = f"{os.path.dirname(__file__)}\..\\{config['firefox']['firefox_driver_path']}"
+        config.read(f"{os.path.dirname(__file__)}\\..\\firefox.ini")
+        firefox_driver_path = f"{os.path.dirname(__file__)}\\..\\{config['firefox']['firefox_driver_path']}"
 
         self.browser = webdriver.Firefox(executable_path=firefox_driver_path,
                                          firefox_binary=config["firefox"]["firefox_exe_path"])

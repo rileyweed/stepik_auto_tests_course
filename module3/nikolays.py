@@ -5,16 +5,17 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 import configparser
 import time
+import os
 
 
 def setUp():
     config = configparser.ConfigParser()
-    config.read("firefox.ini")
-    cap = webdriver.FirefoxOptions().to_capabilities()
-    cap["pageLoadStrategy"] = "eager"
-    return webdriver.Firefox(executable_path=config["firefox"]["firefox_driver_path"],
-                             firefox_binary=config["firefox"]["firefox_exe_path"], capabilities=cap)
+    config.read(f"{os.path.dirname(__file__)}\\..\\firefox.ini")
+    firefox_driver_path = f"{os.path.dirname(__file__)}\\..\\{config['firefox']['firefox_driver_path']}"
 
+    browser = webdriver.Firefox(executable_path=firefox_driver_path,
+                                     firefox_binary=config["firefox"]["firefox_exe_path"])
+    return browser
 
 def cry(browser):
     browser.get('http://boobooka.com/zvuki/zvuki-lyudej/zvuki-stonov/')
