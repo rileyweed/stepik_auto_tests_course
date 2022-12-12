@@ -1,11 +1,11 @@
+import configparser
+import os
+import time
+
 import selenium.common.exceptions
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
-import configparser
-import time
-import os
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 def setUp():
