@@ -5,10 +5,11 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import time
 import math
+import getpass
 
-email = 'robingood7554@gmail.com'
 
-
+email = input("\ninput your email on stepik: ")
+password = getpass.getpass("input your password on stepik: ")
 
 def wait_until(browser, until, n=5):
     """
@@ -58,24 +59,25 @@ def reg_on_stepik(browser):
     :param browser: browser driver
     :return: None
     """
-    try:
-        button_enter = browser.find_element_by_css_selector('a#ember33')
-    except selenium.common.exceptions.NoSuchElementException:
-        print("NoSuchElementException for a#ember33", "maybe you have joined in?", sep='\n')
-        return None
+    locator = (By.CSS_SELECTOR, 'a#ember33')
+    is_visible(browser, locator, strict=True)
+    button_enter = is_clickable(browser, locator, strict=True)
     button_enter.click()
-    email_input = browser.find_element_by_css_selector("form#login_form input#id_login_email")
-    password_input = browser.find_element_by_css_selector("form#login_form input#id_login_password")
+    email_input = browser.find_element(By.CSS_SELECTOR, "form#login_form input#id_login_email")
+    password_input = browser.find_element(By.CSS_SELECTOR, "form#login_form input#id_login_password")
     email_input.clear()
     email_input.send_keys(email)
     password_input.clear()
     password_input.send_keys(password)
-    browser.find_element_by_css_selector("form#login_form button").click()
+    browser.find_element(By.CSS_SELECTOR, "form#login_form button").click()
     # Конрольная проверка на то что нет диалогового окна для входа
     locator = (By.CSS_SELECTOR, "div.modal-dialog-bg")
     conditional = EC.invisibility_of_element_located(locator)
-    flag = wait_until(browser, conditional, 10)
+    flag = wait_until(browser, conditional, 5)
     if not flag:
+        if is_visible(browser, (By.CSS_SELECTOR, "li[role='alert']")):
+            pytest.skip("E-mail адресc и/или пароль не верны")
+            return
         raise ex.TimeoutException(f"tag with {locator[0]} = {locator[1]} is visible")
 
 
@@ -92,13 +94,13 @@ def check_answer(browser):
 
 links = [
     "https://stepik.org/lesson/236895/step/1",
-    "https://stepik.org/lesson/236896/step/1",
-    "https://stepik.org/lesson/236897/step/1",
-    "https://stepik.org/lesson/236898/step/1",
-    "https://stepik.org/lesson/236899/step/1",
-    "https://stepik.org/lesson/236903/step/1",
-    "https://stepik.org/lesson/236904/step/1",
-    "https://stepik.org/lesson/236905/step/1",
+    # "https://stepik.org/lesson/236896/step/1",
+    # "https://stepik.org/lesson/236897/step/1",
+    # "https://stepik.org/lesson/236898/step/1",
+    # "https://stepik.org/lesson/236899/step/1",
+    # "https://stepik.org/lesson/236903/step/1",
+    # "https://stepik.org/lesson/236904/step/1",
+    # "https://stepik.org/lesson/236905/step/1",
 ]
 
 
